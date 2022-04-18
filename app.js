@@ -30,3 +30,11 @@ const loadPhonesInfo = (phones) => {
     });
   }
 };
+const loadUniquePhone = (id) => {
+    fetch(`https://openapi.programming-hero.com/api/phone/${id}`)
+      .then((res) => res.json())
+      .then((result) => uniquePhoneDetail(result.data));
+  };
+  
+
+  
