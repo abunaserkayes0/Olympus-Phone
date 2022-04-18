@@ -31,10 +31,26 @@ const loadPhonesInfo = (phones) => {
   }
 };
 const loadUniquePhone = (id) => {
-    fetch(`https://openapi.programming-hero.com/api/phone/${id}`)
-      .then((res) => res.json())
-      .then((result) => uniquePhoneDetail(result.data));
-  };
-  
+  fetch(`https://openapi.programming-hero.com/api/phone/${id}`)
+    .then((res) => res.json())
+    .then((result) => uniquePhoneDetail(result.data));
+};
 
-  
+const uniquePhoneDetail = (detail) => {
+  console.log(detail);
+  const { image, releaseDate } = detail;
+  const phoneDetailContainer = document.getElementById("phone-container");
+  phoneDetailContainer.textContent='';
+  const phoneDetail = document.createElement("div");
+  phoneDetail.innerHTML = `
+    <div class="card text-center p-2 border-0 my-3">
+            <img class="card-img-top card-image" src="${image}" alt="Card image cap" />
+            <div class="card-body">
+                <h6 class='fw-normal'>${
+                  releaseDate ? releaseDate : "No release Found!!!"
+                }</h6>
+            </div>
+    </div>
+  `;
+  phoneDetailContainer.appendChild(phoneDetail);
+};
