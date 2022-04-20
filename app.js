@@ -1,3 +1,4 @@
+// Search-Phones
 const searchPhones = () => {
   const searchField = document.getElementById("search-field");
   const searchText = searchField.value;
@@ -6,13 +7,18 @@ const searchPhones = () => {
     .then((results) => loadPhonesInfo(results.data.slice(0, 20)));
   searchField.value = "";
 };
+// Phones Information
 const loadPhonesInfo = (phones) => {
+  // Empty-Previous Result
   document.getElementById("phones-container").innerHTML = "";
+  // Phones Not Found Error Massage
   if (phones.length === 0) {
     document.getElementById("resultFound-error").style.display = "block";
   } else {
     phones.forEach((phone) => {
+      //Apply Destructing
       const { slug, brand, image, phone_name } = phone;
+      // All-Phones Container
       const phonesContainer = document.getElementById("phones-container");
       const singlePhoneContainer = document.createElement("div");
       singlePhoneContainer.classList.add("col-lg-4");
@@ -36,12 +42,14 @@ const loadUniquePhone = (id) => {
     .then((res) => res.json())
     .then((result) => uniquePhoneDetail(result.data));
 };
-
+// Single Phone Information
 const uniquePhoneDetail = (detail) => {
+  // Apply Destructing Methods
   const { name, image, releaseDate } = detail;
   const { chipSet, displaySize, memory, sensors, storage } =
     detail.mainFeatures;
   const { Bluetooth, GPS, NFC, Radio, USB, WLAN } = detail.others;
+  // single-phone-Container
   const phoneDetailContainer = document.getElementById("phone-container");
   phoneDetailContainer.textContent = "";
   const phoneDetail = document.createElement("div");
