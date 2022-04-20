@@ -3,10 +3,11 @@ const searchPhones = () => {
   const searchText = searchField.value;
   fetch(`https://openapi.programming-hero.com/api/phones?search=${searchText}`)
     .then((res) => res.json())
-    .then((results) => loadPhonesInfo(results.data));
+    .then((results) => loadPhonesInfo(results.data.slice(0, 20)));
   searchField.value = "";
 };
 const loadPhonesInfo = (phones) => {
+  document.getElementById("phones-container").innerHTML = "";
   if (phones.length === 0) {
     document.getElementById("resultFound-error").style.display = "block";
   } else {
@@ -37,18 +38,36 @@ const loadUniquePhone = (id) => {
 };
 
 const uniquePhoneDetail = (detail) => {
-  console.log(detail);
-  const { image, releaseDate } = detail;
+  const { name, image, releaseDate } = detail;
+  const { chipSet, displaySize, memory, sensors, storage } =
+    detail.mainFeatures;
+  const { Bluetooth, GPS, NFC, Radio, USB, WLAN } = detail.others;
   const phoneDetailContainer = document.getElementById("phone-container");
-  phoneDetailContainer.textContent='';
+  phoneDetailContainer.textContent = "";
   const phoneDetail = document.createElement("div");
   phoneDetail.innerHTML = `
     <div class="card text-center p-2 border-0 my-3">
             <img class="card-img-top card-image" src="${image}" alt="Card image cap" />
+            <h3 class="my-2 fw-bold">${name}</h3>
             <div class="card-body">
-                <h6 class='fw-normal'>${
+                <h6 class='fw-normal'>ReleaseDate:${
                   releaseDate ? releaseDate : "No release Found!!!"
                 }</h6>
+                <h4 class="fw-bold">MainFeatures:</h4>
+                <h6>Storage:${storage}</h6>
+                <h6>ChipSet:${chipSet}</h6>
+                <h6>DisplaySize:${displaySize}</h6>
+                <h6>Memory:${memory}</h6>
+                <h6>Sensors:${
+                  sensors ? [...sensors] : "No sensors data Found"
+                }</h6>
+                <h4 class="fw-bold">Others Information:</h4>
+                <h6>Bluetooth:${Bluetooth}</h6>
+                <h6>Gps:${GPS}</h6>
+                <h6>Nfc:${NFC}</h6>
+                <h6>Radio:${Radio}</h6>
+                <h6>USB:${USB}</h6>
+                <h6>WLAN:${WLAN}</h6>
             </div>
     </div>
   `;
