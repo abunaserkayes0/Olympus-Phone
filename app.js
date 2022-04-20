@@ -2,6 +2,7 @@
 const searchPhones = () => {
   const searchField = document.getElementById("search-field");
   const searchText = searchField.value;
+  // Main-Api-Load
   fetch(`https://openapi.programming-hero.com/api/phones?search=${searchText}`)
     .then((res) => res.json())
     .then((results) => loadPhonesInfo(results.data.slice(0, 20)));
@@ -38,6 +39,7 @@ const loadPhonesInfo = (phones) => {
   }
 };
 const loadUniquePhone = (id) => {
+  // Unique-Api Load
   fetch(`https://openapi.programming-hero.com/api/phone/${id}`)
     .then((res) => res.json())
     .then((result) => uniquePhoneDetail(result.data));
